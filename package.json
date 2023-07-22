@@ -1,6 +1,6 @@
 {
-  "name": "weathercomponant",
-  "version": "0.0.1",
+  "name": "at-weathercomponant",
+  "version": "0.0.2",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -37,5 +37,10 @@
     "jest-cli": "^27.5.1",
     "puppeteer": "^20.7.3"
   },
+
+  "peerDependencies": {
+      "react": "^18.0.0",
+      "angular": "^16.0.0"
+    },
   "license": "MIT"
 }

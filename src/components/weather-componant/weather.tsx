@@ -62,11 +62,18 @@ export class Weather {
   }
 
   onSearch = (city: string) => {
+    this.Info = undefined;
     this.daily = [];
     this.loading = true;
     fetch(`https://api.weatherapi.com/v1/forecast.json?q=${city}&key=${this.apiKey}&days=7`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('City not found');
+        }
+        return res.json();
+      })
       .then(result => {
+        console.log(result);
         this.loading = false;
         this.Info = result;
         for (let i = 1; i < 7; i++) {
@@ -76,7 +83,7 @@ export class Weather {
       .catch(err => {
         console.log(err);
         this.loading = false;
-        console.log(err.message);
+        this.error = err.message;
       });
   };
   switchDegrees(type: string) {
@@ -202,12 +209,10 @@ export class Weather {
           </div>
         </div>
       );
+    } else {
+      weather = <div class="weather">{this.error}</div>;
     }
-
     let content = null;
-    if (this.error) {
-      content = <div>{this.error}</div>;
-    }
     if (this.loading) {
       content = <at-spinner />;
     }
